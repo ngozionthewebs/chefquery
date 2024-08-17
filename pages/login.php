@@ -1,3 +1,61 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+session_start();
+require '../includes/config.php';
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+        
+    // Retrieve the username and password from the POST request
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Define the SQL query to insert the username and password into the users table
+    $sql = "SELECT * FROM user WHERE username = ?";
+
+// Prepare the SQL statement
+$stmt = $conn->prepare($sql);
+
+// Bind the username to the SQL statement
+$stmt->bind_param("s", $username); // "s" means a string parameter
+
+// Execute the SQL statement
+$stmt->execute();
+
+// Store the result in the 'result' variable
+$result = $stmt->get_result();
+
+// Check if user exists
+if($result->num_rows > 0){
+    // Fetch user data
+    $user = $result->fetch_assoc();
+
+    // If the password of the form input = stored password of user found
+    if($password === $user['password']){
+
+        // Store user information in session
+        $_SESSION['username'] = $user['username'];
+
+        // Redirect to home page
+        header("Location: home.php");
+        exit(); // Terminate the script to ensure redirection
+    } else {
+        echo "Invalid username or password"; // (Technically just: password wrong)
+    }
+} else {
+    echo "Invalid username or password"; // (Technically just: username not found)
+}
+
+// Close the statement
+$stmt->close();
+
+// Close the database connection
+$conn->close(); 
+
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +65,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/login.css" rel="stylesheet">
+    <link href="../css/login.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
@@ -16,45 +74,24 @@
         <div class="row">
             <!-- Side Navbar -->
             <div class="col-md-3">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                         <li class="nav-item">
-                            <div class="logo"></div>
-                        </li> 
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">HOME</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">QUESTIONS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">ANSWERS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">GALLERY</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">ACCOUNT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">LOG OUT</a>
-                        </li>
-                    </ul>
-                </div>
+                <?php include '../includes/navbar.php'; ?>
             </div>
 
-            <!-- Signup Form -->
+            <!-- Loginup Form -->
             <div class="col-md-4">
                 <h2>WELCOME 
                 BACK! :) </h2>
-                <form action="signup_process.php" method="POST">
+                <form action="login.php" method="POST">
                     <div class="form-group">
                         <label for="name">What should we call you?</label>
-                        <input type="text" class="form-control" id="name" name=" your name :)" placeholder="name">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
                     </div>
                     <div class="form-group">
-                        <label for="password">Secure your account</label>
-                        <input type="password" class="form-control" id="password" name=" your password" placeholder="your password">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                    </div>
+                    <div class="text">
+                        <p>Don't have an account ? <a href="signup.php" style="color: #007bff;">Sign Up</a></p>
                     </div>
                     <button type="submit" class="btn btn-primary">LOGIN</button>
                 </form>
