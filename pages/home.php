@@ -23,7 +23,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="row">
+<div class="container-fluid">
+<div class="row">
             <!-- Side Navbar -->
             <div class="col-md-3">
                 <?php include '../includes/navbar.php'; ?>
@@ -34,6 +35,7 @@
 
 
     </div>
+</div>
 
     
 
