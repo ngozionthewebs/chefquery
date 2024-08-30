@@ -4,6 +4,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body{
-    background-color: #FDDC3F;
+    background-color: #F0D75C;
+}
+
+.col-md-9 h2{        
+    font-size: 128px;
+    color: #01644D;
 }
 
