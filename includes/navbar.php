@@ -24,9 +24,6 @@
                 <a class="nav-link" href="../pages/admin.php">ADMIN</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../pages/account.php">MY PROFILE</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="../pages/login.php">LOGIN</a>
             </li>
             <li class="nav-item">
