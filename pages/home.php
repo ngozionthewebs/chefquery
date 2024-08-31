@@ -8,17 +8,14 @@ if(!isset($_SESSION['username'])){
     exit(); // Terminate the script to ensure redirection
 }
 
-// Fetch questions from the database
-$sql = "SELECT * FROM question ORDER BY postDate DESC";
+// Determine sort order based on user selection
+$sortOrder = isset($_GET['sort']) && $_GET['sort'] == 'ASC' ? 'ASC' : 'DESC';
+
+// Fetch questions from the database that are approved and not deleted
+$sql = "SELECT * FROM question WHERE deleted = 0 AND approved = 1 ORDER BY postDate $sortOrder";
 $result = $conn->query($sql);
-if ($result->num_rows > 0) {
-   //echo "Data exists.";
-} else {
-   // echo "No data found.";
-}
-if (!$result) {
-    echo "Error: " . $conn->error;
-}
+
+
 
 ?>
 
@@ -42,6 +39,17 @@ if (!$result) {
         </div>
         <div class="col-md-9">
             <h2>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
+
+            <!-- Filter Dropdown -->
+              <!-- <div class="form-group">
+                <label for="sortOrder">Sort by:</label>
+                <select id="sortOrder" class="form-control" onchange="window.location.href='<?php echo $_SERVER['PHP_SELF']; ?>?sort=' + this.value;">
+                    <option value="DESC" <?php if(!isset($_GET['sort']) || $_GET['sort'] == 'DESC') echo 'selected'; ?>>Newest First</option>
+                    <option value="ASC" <?php if(isset($_GET['sort']) && $_GET['sort'] == 'ASC') echo 'selected'; ?>>Oldest First</option>
+                </select> 
+
+            </div> -->
+
             <div class="row">
                 <?php if ($result->num_rows > 0): ?>
                     <?php while($row = $result->fetch_assoc()): ?>

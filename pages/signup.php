@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -6,36 +7,50 @@ session_start();
 require '../includes/config.php';
 
 $registrationSuccess = false; // Flag to track registration success
+$error = ''; // Variable to hold error messages
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve the username, email, and password from the POST request
-    $username = $_POST['username'];
-    $email = $_POST['email'];
+    // Retrieve and sanitize the username, email, and password from the POST request
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Define the SQL query to insert the username, email, and password into the users table
-    $sql = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
-
-    // Prepare the SQL statement for execution
-    $stmt = $conn->prepare($sql);
-
-    // Bind the values of the user's input into the SQL statement
-    $stmt->bind_param("sss", $username, $email, $password);
+    // Check if the username or email is already registered
+    $check_sql = "SELECT * FROM user WHERE email = ?";
+    $stmt = $conn->prepare($check_sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
-    // Execute the prepared statement and check for success/failure
-    if ($stmt->execute()) {
-        $registrationSuccess = true;
-        $_SESSION['username'] = $username;  // Optionally set any session variables as needed
-        header("Location: home.php");       // Redirect to the home page
-        exit();                             // Ensure no further code is executed after redirect
+    if ($result->num_rows > 0) {
+        $error = "An account with this email already exists.";
     } else {
-        echo "<script>alert('Error: " . $stmt->error . "');</script>"; // Display an error alert
+        // Hash the password before storing it
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Define the SQL query to insert the username, email, and hashed password into the users table
+        $sql = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
+
+        // Prepare the SQL statement for execution
+        $stmt = $conn->prepare($sql);
+
+        // Bind the values of the user's input into the SQL statement
+        $stmt->bind_param("sss", $username, $email, $hashedPassword);
+        
+        // Execute the prepared statement and check for success/failure
+        if ($stmt->execute()) {
+            $registrationSuccess = true;
+            $_SESSION['username'] = $username;  // Set session variables as needed
+            header("Location: home.php");       // Redirect to the home page
+            exit();                             // Ensure no further code is executed after redirect
+        } else {
+            $error = "Error: " . $stmt->error; // Store error message
+        }
+
+        $stmt->close();
     }
-    
-    $stmt->close();
     $conn->close();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -61,21 +76,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Signup Form -->
             <div class="col-md-4">
                 <h2>JOIN THE COMMUNITY</h2>
+                <?php if ($error): ?>
+                    <div class="alert alert-danger">
+                        <?php echo htmlspecialchars($error); ?>
+                    </div>
+                <?php endif; ?>
                 <form action="signup.php" method="POST">
                     <div class="form-group">
                         <label for="username">What should we call you?</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your name">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Where should we send you news?</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Secure your account</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                     </div>
                     <div class="text">
-                        <p>Already have an account ? <a href="login.php" style="color: #007bff;">Login</a></p>
+                        <p>Already have an account? <a href="login.php" style="color: #007bff;">Login</a></p>
                     </div>
                     <button type="submit" class="btn btn-primary">SIGN UP</button>
                 </form>

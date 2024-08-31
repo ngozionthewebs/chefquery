@@ -36,37 +36,46 @@ if(isset($_GET['id'])){
     <link href="../css/question-card.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    
-    <h1><?php echo htmlspecialchars($question['title']); ?></h1>
-    <p><?php echo nl2br(htmlspecialchars($question['content'])); ?></p>
-    <p><strong>Posted on:</strong> <?php echo htmlspecialchars($question['postDate']); ?></p>
-
-    <!-- Answer Form -->
-    <h2>Submit Your Answer</h2>
-    <form action="submitAnswer.php" method="post">
-        <div class="form-group">
-            <label for="answer">Your Answer:</label>
-            <textarea class="form-control" id="answer" name="answer" rows="4" required></textarea>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Include the Navbar -->
+        <div class="col-md-3 sidebar-sticky">
+            <?php include '../includes/navbar.php'; ?>
         </div>
-        <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
-        <button type="submit" class="btn btn-primary">Submit Answer</button>
-    </form>
+        
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <h1><?php echo htmlspecialchars($question['title']); ?></h1>
+            <p><?php echo nl2br(htmlspecialchars($question['content'])); ?></p>
+            <p><strong>Posted on:</strong> <?php echo htmlspecialchars($question['postDate']); ?></p>
 
-    <!-- Display Answers -->
-    <h2>Answers</h2>
-    <?php if ($result_answers->num_rows > 0): ?>
-        <?php while($answer = $result_answers->fetch_assoc()): ?>
-            <div class="card mt-3">
-                <div class="card-body">
-                    <p><?php echo nl2br(htmlspecialchars($answer['content'])); ?></p>
-                    <p><strong>Answered on:</strong> <?php echo htmlspecialchars($answer['postDate']); ?></p>
+            <!-- Answer Form -->
+            <h2>Submit Your Answer</h2>
+            <form action="submitAnswer.php" method="post">
+                <div class="form-group">
+                    <label for="answer">Your Answer:</label>
+                    <textarea class="form-control" id="answer" name="answer" rows="4" required></textarea>
                 </div>
-            </div>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <p>No answers yet. Be the first to answer!</p>
-    <?php endif; ?>
+                <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
+                <button type="submit" class="btn btn-primary">Submit Answer</button>
+            </form>
+
+            <!-- Display Answers -->
+            <h2>Answers</h2>
+            <?php if ($result_answers->num_rows > 0): ?>
+                <?php while($answer = $result_answers->fetch_assoc()): ?>
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <p><?php echo nl2br(htmlspecialchars($answer['content'])); ?></p>
+                            <p><strong>Answered on:</strong> <?php echo htmlspecialchars($answer['postDate']); ?></p>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No answers yet. Be the first to answer!</p>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>
 </body>
 </html>
