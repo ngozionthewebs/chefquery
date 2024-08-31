@@ -43,8 +43,9 @@ if (!$result) {
             <?php include '../includes/navbar.php'; ?>
         </div>
         <div class="col-md-9">
-            <h1>Admin Dashboard</h1>
-            <h2>Approve or Delete Questions</h2>
+            <div class="title"><p>Admin Dashboard</p></div>
+            <div class="sub-headings"><p>Approve or Delete Questions</p></div>
+        <div class="approve-card">            
             <?php if ($result->num_rows > 0): ?>
                 <ul class="list-group">
                     <?php while($row = $result->fetch_assoc()): ?>
@@ -57,6 +58,7 @@ if (!$result) {
                     <?php endwhile; ?>
                 </ul>
             <?php else: ?>
+        </div>
                 <p>No questions to approve.</p>
             <?php endif; ?>
         </div>

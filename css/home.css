@@ -12,3 +12,66 @@ body{
     color: #01644D;
 }
 
+.question {
+    background: rgba(255, 255, 255, 0.2); /* A semi-transparent white background */
+    border-radius: 15px; /* Rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Optional border to enhance the glass effect */
+    backdrop-filter: blur(10px); /* Apply the glassmorphism blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
+    padding: 20px; /* Add some padding for inner content */
+    color: #01644D; /* Text color to stand out against the background */
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.answer p{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    font-style: normal;
+    color: #01644D;
+
+}
+
+.form-control{
+    background: rgba(255, 255, 255, 0.2); /* A semi-transparent white background */
+    border-radius: 15px; /* Rounded corners */
+    border: 1px dashed #01644D; /* Dashed green border */
+    backdrop-filter: blur(10px); /* Apply the glassmorphism blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
+    padding: 20px; /* Add some padding for inner content */
+    color: #01644D; /* Text color to stand out against the background */
+    
+
+}
+
+.title p{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 128px;
+    font-style: normal;
+    color: #01644D;
+    margin-top: 40px;
+
+}
+
+.sub-headings p{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    color: #01644D;
+}
+
+.list-group-item{
+    background: rgba(255, 255, 255, 0.2); /* A semi-transparent white background */
+    border-radius: 15px; /* Rounded corners */
+
+    backdrop-filter: blur(10px); /* Apply the glassmorphism blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
+    padding: 20px; /* Add some padding for inner content */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #01644D; /* Text color to stand out against the background */
+
+}

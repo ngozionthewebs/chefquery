@@ -45,23 +45,27 @@ if(isset($_GET['id'])){
         
         <!-- Main Content -->
         <div class="col-md-9">
-            <h1><?php echo htmlspecialchars($question['title']); ?></h1>
-            <p><?php echo nl2br(htmlspecialchars($question['content'])); ?></p>
-            <p><strong>Posted on:</strong> <?php echo htmlspecialchars($question['postDate']); ?></p>
+            <div class="question">
+                <h1><?php echo htmlspecialchars($question['title']); ?></h1>
+                <p><?php echo nl2br(htmlspecialchars($question['content'])); ?></p>
+                <p><strong>Posted on:</strong> <?php echo htmlspecialchars($question['postDate']); ?></p>
+            </div>
 
             <!-- Answer Form -->
-            <h2>Submit Your Answer</h2>
-            <form action="submitAnswer.php" method="post">
-                <div class="form-group">
-                    <label for="answer">Your Answer:</label>
-                    <textarea class="form-control" id="answer" name="answer" rows="4" required></textarea>
-                </div>
-                <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
-                <button type="submit" class="btn btn-primary">Submit Answer</button>
-            </form>
+            <div class="answer">
+                <p>Submit Your Answer</p>
+                <form action="submitAnswer.php" method="post">
+                    <div class="form-group">
+                     <label for="answer">Your Answer:</label>
+                        <textarea class="form-control" id="answer" name="answer" rows="4" required></textarea>
+                    </div>
+                    <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
+                    <button type="submit" class="btn btn-primary">Submit Answer</button>
+                </form>
 
+            </div>
             <!-- Display Answers -->
-            <h2>Answers</h2>
+            <div class="title"><p>Answers</p></div>
             <?php if ($result_answers->num_rows > 0): ?>
                 <?php while($answer = $result_answers->fetch_assoc()): ?>
                     <div class="card mt-3">
