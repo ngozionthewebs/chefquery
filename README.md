@@ -166,3 +166,7 @@ User Engagement: Encouraging user interaction and participation while maintainin
 ```
 https://drive.google.com/file/d/1NdljcN6lTr2J_vZ5Pr2M3xgjya-5yXqE/view?usp=sharing
 ```
+
+## License
+
+Distributed under the MIT License. See LICENSE for more information.
