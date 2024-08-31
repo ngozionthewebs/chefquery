@@ -147,5 +147,21 @@ User Engagement: Encouraging user interaction and participation while maintainin
 
 ## Mockups
 
+### Ask A Question Page
+![Free_MacBook_Pro_1 copy](https://github.com/user-attachments/assets/359591d9-fe5e-41b8-ac4b-e866d773276f)
+
+### Home Page
+![Free_MacBook_Pro_2 copy](https://github.com/user-attachments/assets/63b1595e-bcd1-45ff-9194-5fa6c744ac4a)
+
+### Login Page
+![Free_MacBook_Pro_3 copy](https://github.com/user-attachments/assets/5b5cc2db-614e-40aa-a944-48fff0edb257)
+
+### Admin Dashboard
+![Free_MacBook_Pro_4 copy](https://github.com/user-attachments/assets/f66e92a9-783b-4a90-80f6-72ce0de99ab2)
+
 
 ## Demonstration Video
+
+```
+
+```
