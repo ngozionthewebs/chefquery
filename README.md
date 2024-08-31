@@ -35,10 +35,9 @@ Before you begin, make sure you have the following installed on your machine:
    - First, clone the Chef Query repository to your local machine using Git:
      ```bash
      git clone [https://github.com/your-username/chefquery.git](https://github.com/ngozionthewebs/chefquery.git
-     cd chefquery
-)
-    
+     cd chefquery 
      ```
+ 
 
 #### Step 2: Set Up the Database
 
